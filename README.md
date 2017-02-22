@@ -17,3 +17,4 @@ Learning Machine Learning from [Coursera](https://www.coursera.org/learn/machine
 
 ### Week 2
 
+- 代价函数
