@@ -13,3 +13,7 @@ Learning Machine Learning from [Coursera](https://www.coursera.org/learn/machine
 	- Classification
 	- Regression	
 - 无监督学习
+
+
+### Week 2
+
