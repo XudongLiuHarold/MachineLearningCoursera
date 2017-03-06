@@ -27,3 +27,11 @@ Learning Machine Learning from [Coursera](https://www.coursera.org/learn/machine
 - **Vectorization**
 
 - Octave & Matlab tutorial
+
+### Week 3 Logistic Regression
+
+- Classification
+- Logistic Regression is a classification
+- Sigmoid Funcation or Logistic Funcation
+- Decision Boundary
+
