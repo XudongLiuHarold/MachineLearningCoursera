@@ -30,11 +30,8 @@ X = [ones(m, 1) X];
 %       for each row.
 %       
 
-
-
-
-
-
+possibility = (sigmoid(all_theta*X'))';
+[t,p] = max(possibility,[],2);
 
 % =========================================================================
 
