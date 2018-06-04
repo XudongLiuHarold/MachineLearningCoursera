@@ -75,34 +75,32 @@ for i = 1 : m
 end
 
 J = sum(sum((-y_t) .* log(H) - (1-y_t) .* log(1-H))) /m;
-t1 = Theta1(:,2:input_layer_size+1); 
-t2 = Theta2(:,2:hidden_layer_size+1); 
+t1 = Theta1(:,2:end); 
+t2 = Theta2(:,2:end); 
 J = J + lambda * (sum(sum(t1 .^2)) + sum(sum(t2 .^2))) / (m*2);
 
 % Part 2:
-% disp(size(Z));
-% disp(size(H));
+% for t = 1 : magic
+%     % step 1 & 2
+%     a1 =  X(t,:)';
+%     z2 = Z(t,:)'; 
+%     a2 = A(t,:)';
+%     delta3 = H(:,t) - y_t(:,t);
+%     % step 3
+%     delta2 = Theta2' * delta3 .* [1; sigmoidGradient(z2)];
+%     % step 4
+%     delta2 = delta2(2:end);
 
+%     Theta2_grad = Theta2_grad + delta3 * (a2)';
+%     Theta1_grad = Theta1_grad + delta2 * (a1)';
+% end
 
+D3 = H - y_t;
+D2 = Theta2'*D3  .* ([ones(m,1) sigmoidGradient(Z)])';
+D2 = D2(2:end,:);
 
-for t = 1 : m
-    % step 1
-    a1 =  X(t,:)';
-    z2 = Theta1 * a1;
-    a2 = sigmoid(z2);
-    a2 = [1 ; a2];
-    z3 = Theta2 * a2;
-    a3 = sigmoid(z3);
-    % step 2
-    delta3 = a3 - y_t(:,t);
-    % step 3
-    delta2 = Theta2' * delta3 .* [1; sigmoidGradient(z2)];
-    %step 4
-    delta2 = delta2(2:end);
-
-    Theta2_grad = Theta2_grad + delta3 * (a2)';
-    Theta1_grad = Theta1_grad + delta2 * (a1)';
-end
+Theta2_grad = D3 * A;
+Theta1_grad = D2 * X;
 
 Theta2_grad = Theta2_grad / m + lambda * Theta2 / m;
 Theta2_grad(:,1) =  Theta2_grad(:,1) - lambda * Theta2(:,1) / m;
