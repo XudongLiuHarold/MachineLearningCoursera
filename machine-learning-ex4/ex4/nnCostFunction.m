@@ -80,7 +80,7 @@ t2 = Theta2(:,2:end);
 J = J + lambda * (sum(sum(t1 .^2)) + sum(sum(t2 .^2))) / (m*2);
 
 % Part 2:
-% for t = 1 : magic
+% for t = 1 : m
 %     % step 1 & 2
 %     a1 =  X(t,:)';
 %     z2 = Z(t,:)'; 
@@ -95,13 +95,15 @@ J = J + lambda * (sum(sum(t1 .^2)) + sum(sum(t2 .^2))) / (m*2);
 %     Theta1_grad = Theta1_grad + delta2 * (a1)';
 % end
 
+% step 2
 D3 = H - y_t;
+% step 3
 D2 = Theta2'*D3  .* ([ones(m,1) sigmoidGradient(Z)])';
 D2 = D2(2:end,:);
-
+% step 4
 Theta2_grad = D3 * A;
 Theta1_grad = D2 * X;
-
+% step 5
 Theta2_grad = Theta2_grad / m + lambda * Theta2 / m;
 Theta2_grad(:,1) =  Theta2_grad(:,1) - lambda * Theta2(:,1) / m;
 Theta1_grad = Theta1_grad / m + lambda * Theta1 / m;
