@@ -23,11 +23,30 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
+possibleParams = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
+len = length(possibleParams);
 
+%Training with initial (C,sigma)
+model = svmTrain(X, y, C, @(x1, x2) gaussianKernel(x1, x2, sigma));
+predictions = svmPredict(model,Xval);
+minError = mean(double(predictions ~= yval));
 
-
-
-
+for i = 1 : len
+    for j = 1 : len
+        tmpC = possibleParams(i);
+        tmpSigma = possibleParams(j);
+        % training svm use this (C,sigma)
+        model = svmTrain(X, y, tmpC, @(x1, x2) gaussianKernel(x1, x2, tmpSigma));
+        predictions = svmPredict(model,Xval);
+        tmpError = mean(double(predictions ~= yval));
+        % compare with current min (C,sigma)
+        if tmpError < minError;
+            minError = tmpError;
+            C = tmpC;
+            sigma = tmpSigma;
+        end
+    end 
+end
 
 % =========================================================================
 
